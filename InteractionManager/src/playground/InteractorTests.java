@@ -13,7 +13,7 @@ public class InteractorTests {
 	
 	@Test
 	public void test_canPressButton_expectButtonAcknowledge() {
-		DetachedButton button = new DetachedButton();
+		Subject button = new DetachedButton();
 		
 		assertFalse(button.is("Pressed"));
 		button.request("PRESS");
@@ -24,7 +24,7 @@ public class InteractorTests {
 	
 	@Test
 	public void test_invalidActionsPerformedUponButton_expectButtonDoesNotChangeState() {
-		DetachedButton button = new DetachedButton();
+		Subject button = new DetachedButton();
 		
 		assertFalse(button.is("Pressed"));
 		button.request("FLICK");
@@ -36,7 +36,7 @@ public class InteractorTests {
 	@Test
 	public void test_fingerCanFlickLightswitch_expectLightswitchAcknowledge() {
 		Instigator finger = (subject)-> { subject.request("FLICK"); };
-		DetachedLightSwitch lightswitch = new DetachedLightSwitch();
+		Subject lightswitch = new DetachedLightSwitch();
 		
 		assertFalse(lightswitch.is("PassingCurrent"));
 		finger.disturb(lightswitch);
@@ -49,7 +49,7 @@ public class InteractorTests {
 	public void test_fingerFlickLightswitch_expectLampTurnsOn() {
 		Instigator finger = (subject)-> { subject.request("FLICK"); };
 		Interactor lightswitch = new LightSwitch();
-		DetachedLamp lamp = new DetachedLamp();
+		Subject lamp = new DetachedLamp();
 		
 		lightswitch.associate(lamp);
 		
@@ -64,7 +64,7 @@ public class InteractorTests {
 	@Test
 	public void test_pressLightswitch_expectLampDoesNotChangeState() {
 		Interactor lightswitch = new LightSwitch();
-		DetachedLamp lamp = new DetachedLamp();
+		Subject lamp = new DetachedLamp();
 		
 		lightswitch.associate(lamp);
 		
