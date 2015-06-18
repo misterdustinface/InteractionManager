@@ -1,10 +1,11 @@
 package base;
 
 import java.util.Set;
+import java.util.function.BooleanSupplier;
 
 import datastructures.Table;
 
-final public class Attributes {
+public class Attributes {
 	
 	final private Table<Object> attributes;
 	
@@ -28,8 +29,31 @@ final public class Attributes {
 		setValueOf(booleanAttribute, !is(booleanAttribute));
 	}
 	
-	public boolean is(String booleanAttribute) {
-		return (boolean)getValueOf(booleanAttribute);
+	public boolean is(String attributeName) {
+		Object attribute = getValueOf(attributeName);
+		if (attribute instanceof BooleanSupplier) {
+			return ((BooleanSupplier) attribute).getAsBoolean();
+		} else if (attribute instanceof Boolean) {
+			return (boolean) attribute;
+		} else {
+			return false;
+		}
 	}
 	
+	public void increment(String attributeName, Object value) {
+		Number A = (Number)getValueOf(attributeName);
+		Number B = (Number)value;
+		setValueOf(attributeName, A.doubleValue() + B.doubleValue());
+	}
+	
+	public void decrement(String attributeName, Object value) {
+		Number A = (Number)getValueOf(attributeName);
+		Number B = (Number)value;
+		setValueOf(attributeName, A.doubleValue() - B.doubleValue());
+	}
+	
+	public Number getNumberValueOf(String attributeName) {
+		return (Number)attributes.get(attributeName);
+	}
+		
 }

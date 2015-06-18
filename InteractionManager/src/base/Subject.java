@@ -1,41 +1,47 @@
 package base;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
-public class Subject extends Actor {
+
+public class Subject extends Attributes {
 	
-	private Attributes attributes;
+	private Actor actor;
 	
 	public Subject() {
-		attributes = new Attributes();
+		actor = new Actor();
 	}
-	
+
 	public void request(String request) {
 		try {
-			performAction(request);
+			actor.performAction(request);
 		} catch (InvalidActionException uae) {
 			uae.printStackTrace();
 		}
 	}
-
-	final public Object getValueOf(String attributeName) {
-		return attributes.getValueOf(attributeName);
+	
+	public void request(String request, Object input) {
+		try {
+			actor.performAction(request, input);
+		} catch (InvalidActionException uae) {
+			uae.printStackTrace();
+		}
 	}
 	
-	final public Set<String> getAttributes() {
-		return attributes.getAttributes();
+	final public void learnAction(String action) {
+		actor.learnAction(action);
 	}
 	
-	final public boolean is(String attributeName) {
-		return attributes.is(attributeName);
+	final public void learnAction(String action, Consumer implementation) {
+		actor.learnAction(action, implementation);
 	}
 	
-	protected void setValueOf(String attributeName, Object attribute) {
-		attributes.setValueOf(attributeName, attribute);
+	final public void forgetAction(String action) {
+		actor.forgetAction(action);
 	}
 	
-	protected void toggle(String attributeName) {
-		attributes.toggle(attributeName);
+	final public Set<String> getActions() {
+		return actor.getActions();
 	}
 
 }

@@ -2,7 +2,7 @@ package base;
 
 import java.util.HashSet;
 
-abstract public class Interactor extends Subject implements Instigator {
+abstract public class Interactor extends Subject {
 	
 	private HashSet<Subject> associatedSubjects;
 	
@@ -23,10 +23,17 @@ abstract public class Interactor extends Subject implements Instigator {
 		interactWithAssociatedSubjects();
 	}
 	
+	public void request(String request, Object input) {
+		super.request(request, input);
+		interactWithAssociatedSubjects();
+	}
+	
 	private void interactWithAssociatedSubjects() {
 		for (Subject s : associatedSubjects) {
-			disturb(s);
+			disturbAssociatedSubject(s);
 		}
 	}
+	
+	abstract protected void disturbAssociatedSubject(Subject s);
 	
 }
